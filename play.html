@@ -18,6 +18,11 @@
   </div>
   <div class="play-frame-wrap" id="play-mount"></div>
 
+  <div class="wrap play-support" id="play-support" hidden>
+    <p class="play-support-note" id="play-support-note"></p>
+    <a class="btn btn-kofi" href="#" data-link="kofi">☕ Support on Ko-Fi</a>
+  </div>
+
 <script src="assets/js/content.js"></script>
 <script>
 (function () {
@@ -43,22 +48,45 @@
   document.title = game.title + " — Pickle Castle Game Studios";
   document.getElementById("play-title").textContent = game.title;
 
-  var frame = document.createElement("iframe");
-  frame.className = "play-frame";
-  frame.title = game.title;
-  frame.allow = "autoplay; fullscreen; gamepad";
-  frame.setAttribute("allowfullscreen", "");
-
-  if (game.embed.type === "itch") {
-    frame.src = "https://itch.io/embed-upload/" + encodeURIComponent(game.embed.id) + "?color=2D5D2E";
-  } else if (game.embed.type === "iframe") {
-    // Embeds a page that's deployed and hosted elsewhere (its own repo's
-    // GitHub Pages, etc.) — the canonical build lives there, not here.
-    frame.src = game.embed.url;
+  if (game.embed.type === "external") {
+    // Nothing to embed for a native app / storefront listing — this page
+    // shouldn't normally be reached for one (the homepage links out
+    // directly instead), but handle it gracefully if it is.
+    mount.innerHTML = game.embed.url
+      ? '<p class="play-error">This game opens in its own store. ' +
+        '<a href="' + game.embed.url.replace(/"/g, "&quot;") + '" style="color:#F96318">Get it →</a></p>'
+      : '<p class="play-error">Not out yet — check back soon. ' +
+        '<a href="index.html#games" style="color:#F96318">Back to the arcade →</a></p>';
   } else {
-    frame.src = game.embed.path;
+    var frame = document.createElement("iframe");
+    frame.className = "play-frame";
+    frame.title = game.title;
+    frame.allow = "autoplay; fullscreen; gamepad";
+    frame.setAttribute("allowfullscreen", "");
+
+    if (game.embed.type === "itch") {
+      frame.src = "https://itch.io/embed-upload/" + encodeURIComponent(game.embed.id) + "?color=2D5D2E";
+    } else if (game.embed.type === "iframe") {
+      // Embeds a page that's deployed and hosted elsewhere (its own repo's
+      // GitHub Pages, etc.) — the canonical build lives there, not here.
+      frame.src = game.embed.url;
+    } else {
+      frame.src = game.embed.path;
+    }
+    mount.appendChild(frame);
   }
-  mount.appendChild(frame);
+
+  // Ko-Fi callout under the game — always shown for a playable game, with
+  // the game's own price/support line pulled from content.js so it stays
+  // accurate per-game (e.g. "Free — donations welcome" vs a paid title).
+  var support = document.getElementById("play-support");
+  var note = document.getElementById("play-support-note");
+  if (support && game.embed.type !== "external") {
+    note.textContent = game.price
+      ? "This game is " + game.price.charAt(0).toLowerCase() + game.price.slice(1) + "."
+      : "Enjoying this? Consider supporting the studio.";
+    support.hidden = false;
+  }
 })();
 </script>
 </body>

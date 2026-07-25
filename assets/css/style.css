@@ -327,6 +327,13 @@ p  { margin: 0 0 1rem; }
 }
 .play-error { color: var(--cream); text-align: center; padding: 4rem 1rem; }
 
+.play-support {
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+  flex-wrap: wrap; text-align: center;
+  padding: 1.4rem 0 2.2rem;
+}
+.play-support-note { margin: 0; color: rgba(253,242,226,.85); font-size: 1rem; }
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
