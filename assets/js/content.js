@@ -17,11 +17,20 @@ const SITE = {
 
      1) SELF-HOSTED  →  put the build in  games/<slug>/  (needs an index.html)
         embed: { type: "local", path: "games/pug-panic/" }
+        Use this only when this repo is the ONE canonical copy of the build.
+        If the game already deploys from its own repo (its own GitHub Pages,
+        itself), use type "iframe" below instead — don't duplicate the build
+        here, or the copy on this site goes stale the next time it ships.
 
      2) ITCH.IO      →  copy the numeric ID out of your itch embed code
         embed: { type: "itch", id: "1234567" }
 
-     3) EXTERNAL STORE (App Store, Steam, Google Play, itch page you don't
+     3) IFRAME (a page that's already deployed elsewhere — its own repo's
+        GitHub Pages, its own domain, etc.) → embeds that live URL directly,
+        so this site always shows whatever's currently live there.
+        embed: { type: "iframe", url: "https://picklecastlestudios.github.io/shattered-archive/" }
+
+     4) EXTERNAL STORE (App Store, Steam, Google Play, itch page you don't
         want embedded, etc.) → the card's button links out instead of
         embedding an iframe. Leave url: "" until the listing exists — the
         button then shows "Coming soon" even if status is "playable".
@@ -44,8 +53,10 @@ const SITE = {
        chat for what's still unconfirmed.
        ----------------------------------------------------------------- */
     {
-      // ⚠ PLAYABLE, but embed.path below is a placeholder — see chat.
-      // Waiting on where the actual build lives before this can go live.
+      // Canonical build lives at github.com/picklecastlestudios/shattered-archive,
+      // deployed on its own GitHub Pages. Embedded live via iframe, not
+      // duplicated into this repo — updates to that repo show up here
+      // automatically, no re-sync needed.
       slug: "shattered-archive",
       title: "THE SHATTERED ARCHIVE",
       tagline: "A game that teaches you how to use Claude. Not associated " +
@@ -54,7 +65,7 @@ const SITE = {
       cover: "assets/games/placeholder.svg",
       status: "playable",
       price: "Free — donations welcome",            // no charge; Ko-Fi carries the ask
-      embed: { type: "local", path: "games/shattered-archive/" }
+      embed: { type: "iframe", url: "https://picklecastlestudios.github.io/shattered-archive/" }
     },
     {
       slug: "no-civ-just-deer",

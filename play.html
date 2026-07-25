@@ -51,6 +51,10 @@
 
   if (game.embed.type === "itch") {
     frame.src = "https://itch.io/embed-upload/" + encodeURIComponent(game.embed.id) + "?color=2D5D2E";
+  } else if (game.embed.type === "iframe") {
+    // Embeds a page that's deployed and hosted elsewhere (its own repo's
+    // GitHub Pages, etc.) — the canonical build lives there, not here.
+    frame.src = game.embed.url;
   } else {
     frame.src = game.embed.path;
   }
