@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play — Pickle Castle Game Studios</title>
+<link rel="icon" href="assets/brand/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="play-shell">
+  <div class="wrap play-bar">
+    <a class="btn btn-ghost btn-sm" href="index.html#games">← All games</a>
+    <h1 id="play-title">Loading…</h1>
+    <a class="btn btn-kofi btn-sm" href="#" data-link="kofi">Support us</a>
+  </div>
+  <div class="play-frame-wrap" id="play-mount"></div>
+
+<script src="assets/js/content.js"></script>
+<script>
+(function () {
+  "use strict";
+  document.querySelectorAll("[data-link]").forEach(function (el) {
+    var url = SITE.links[el.getAttribute("data-link")];
+    if (url && !/CHANGE-ME/.test(url)) {
+      el.href = url; el.target = "_blank"; el.rel = "noopener";
+    }
+  });
+
+  var slug = new URLSearchParams(location.search).get("game");
+  var game = (SITE.games || []).filter(function (g) { return g.slug === slug; })[0];
+  var mount = document.getElementById("play-mount");
+
+  if (!game) {
+    document.getElementById("play-title").textContent = "Game not found";
+    mount.innerHTML = '<p class="play-error">That game isn\'t in the castle. ' +
+      '<a href="index.html#games" style="color:#F96318">Back to the arcade →</a></p>';
+    return;
+  }
+
+  document.title = game.title + " — Pickle Castle Game Studios";
+  document.getElementById("play-title").textContent = game.title;
+
+  var frame = document.createElement("iframe");
+  frame.className = "play-frame";
+  frame.title = game.title;
+  frame.allow = "autoplay; fullscreen; gamepad";
+  frame.setAttribute("allowfullscreen", "");
+
+  if (game.embed.type === "itch") {
+    frame.src = "https://itch.io/embed-upload/" + encodeURIComponent(game.embed.id) + "?color=2D5D2E";
+  } else {
+    frame.src = game.embed.path;
+  }
+  mount.appendChild(frame);
+})();
+</script>
+</body>
+</html>
