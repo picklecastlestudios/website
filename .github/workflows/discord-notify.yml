@@ -1,0 +1,43 @@
+﻿name: Notify Discord on Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post release to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+        run: |
+          python3 - <<'PYEOF'
+          import json, os, urllib.request
+
+          title = os.environ.get("RELEASE_NAME") or os.environ["RELEASE_TAG"]
+          body = (os.environ.get("RELEASE_BODY") or "")[:1800]
+
+          payload = {
+              "embeds": [{
+                  "title": title,
+                  "url": os.environ["RELEASE_URL"],
+                  "description": body,
+                  "color": int("F96318", 16)
+              }]
+          }
+          req = urllib.request.Request(
+              os.environ["DISCORD_WEBHOOK_URL"],
+              data=json.dumps(payload).encode(),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          urllib.request.urlopen(req)
+          PYEOF
