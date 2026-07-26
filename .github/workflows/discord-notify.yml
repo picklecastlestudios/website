@@ -36,7 +36,10 @@ jobs:
           req = urllib.request.Request(
               os.environ["DISCORD_WEBHOOK_URL"],
               data=json.dumps(payload).encode(),
-              headers={"Content-Type": "application/json"},
+              headers={
+                  "Content-Type": "application/json",
+                  "User-Agent": "PickleCastleReleaseBot (https://picklecastlestudios.com, 1.0)",
+              },
               method="POST",
           )
           urllib.request.urlopen(req)
