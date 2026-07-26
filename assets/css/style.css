@@ -285,11 +285,6 @@ p  { margin: 0 0 1rem; }
 .support-discord { background: var(--green); color: var(--cream); }
 .support-icon { width: 34px; height: 34px; flex: none; }
 
-/* Official Ko-Fi widget button — nudged toward the site's shape language.
-   Ko-Fi controls the inner markup, so keep this defensive. */
-.kofi-widget { display: flex; justify-content: center; margin-top: .3rem; }
-.kofi-widget img { border-radius: 999px !important; }
-.kofi-widget a { display: inline-block; }
 .support-body { display: flex; flex-direction: column; }
 .support-body strong { font-family: var(--font-display); font-size: 1.2rem; }
 .support-body span { font-size: .95rem; opacity: .9; }
