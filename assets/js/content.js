@@ -62,7 +62,7 @@ const SITE = {
       tagline: "A game that teaches you how to use Claude. Not associated " +
                "with or sponsored by Anthropic.",
       tags: ["Learning", "Singleplayer"],
-      cover: "assets/games/placeholder.svg",
+      cover: "assets/games/shattered-archive.jpg",
       status: "playable",
       price: "Free — donations welcome",            // no charge; Ko-Fi carries the ask
       embed: { type: "iframe", url: "https://picklecastlestudios.github.io/shattered-archive/" }
@@ -73,7 +73,7 @@ const SITE = {
       tagline: "A cute chibi colony sim about deer who are a little done " +
                "with humans and decide to build their own civilization first.",
       tags: ["Colony sim", "iOS — coming soon"],
-      cover: "assets/games/placeholder.svg",
+      cover: "assets/games/no-civ-just-deer.jpg",
       status: "soon",
       price: "~$4 (planned)",                       // not final — App Store pricing TBD
       embed: { type: "external", url: "" }           // fill in once it's on the App Store
