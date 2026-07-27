@@ -76,8 +76,9 @@ const SITE = {
   /* ============================================================
      PROTOTYPES  —  early, playable builds that aren't finished games
      yet. Kept separate from `games` on purpose: no price, no "coming
-     soon" state (if it's here, it's playable), and always carries real
-     playtester notes so visitors know exactly how early this is.
+     soon" state (if it's here, it's playable), and always carries a
+     short ask telling visitors what to try and what feedback we want —
+     these are notes FOR playtesters, not notes FROM a playtester.
 
      Same `embed` shape as games (see above) — these are self-hosted
      ("local") single-file builds under games/<slug>/, since a private
@@ -85,9 +86,11 @@ const SITE = {
      prototype snapshot is expected to lag its game repo rather than
      mirror it live like the iframe-embedded finished games do.
 
-     `playtesterNotes` — a few honest sentences, written after actually
-     playing the build. Say what worked, say what didn't, say what
-     wasn't tested. Never polish this into ad copy.
+     `feedbackPrompt` — a short note addressed TO the person about to play,
+     not a report of what we already found. Tell them what's actually in
+     this build, what's still missing (so they don't report a known gap
+     as a bug), and what kind of feedback would help most. This is an ask
+     for playtesters, not playtester notes from us — write it that way.
      ============================================================ */
   prototypes: [
     {
@@ -99,14 +102,13 @@ const SITE = {
       tags: ["3D", "Dungeon builder"],
       cover: "assets/games/dungeon-leader.jpg",
       embed: { type: "local", path: "games/dungeon-leader/" },
-      playtesterNotes: "We gave this a real playtest before posting it. " +
-        "Carving out rooms, painting them by type, and watching a minion " +
-        "actually wander around and use the space is already satisfying " +
-        "with zero combat or scoring — which was the whole test for this " +
-        "stage. Rough edges: the opening view is dark and empty until " +
-        "you've carved a few tiles (no zoom yet), and it's not always " +
-        "obvious what's nudging the mood dial. No raids, multiple floors, " +
-        "or saving yet — that's next."
+      feedbackPrompt: "This build is just the core loop: carve tiles, paint " +
+        "rooms, watch a minion move in. No combat, no scoring, no raids yet " +
+        "— that's intentional, not missing. Try digging out a small home and " +
+        "tell us: does the carve-and-furnish loop feel good on its own? Does " +
+        "the mood dial make sense without any explanation? Does the dark, " +
+        "empty opening view feel like a fresh start or just empty? Rough " +
+        "edges are expected — let us know what you hit on Discord."
     },
     {
       slug: "no-civ-just-deer",
@@ -116,13 +118,12 @@ const SITE = {
       tags: ["Colony sim", "Stealth"],
       cover: "assets/games/no-civ-just-deer-prototype.jpg",
       embed: { type: "local", path: "games/no-civ-just-deer-prototype/" },
-      playtesterNotes: "We played through the opening of this one too. " +
-        "Picking a plot, placing the Deer Lodge, and putting up a " +
-        "Woodcutter's Hut all felt confident and full of personality, " +
-        "right down to the flavor text. We didn't get to the core " +
-        "resource-gathering drag-and-drop or the ranger encounters this " +
-        "round, so treat this as a first look at the on-ramp rather than " +
-        "the whole game."
+      feedbackPrompt: "This build only covers the opening: pick a plot, " +
+        "place your Deer Lodge, put up your first building. The core " +
+        "gathering loop and ranger encounters aren't wired up yet, so " +
+        "don't worry about finding those — instead tell us how the on-ramp " +
+        "itself lands: is it clear what to do, does the tone work for you, " +
+        "would you want to keep playing? Drop your thoughts on Discord."
     }
   ],
 

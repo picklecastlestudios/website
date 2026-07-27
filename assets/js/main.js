@@ -82,8 +82,8 @@
               '<h3 class="game-title">' + esc(p.title) + '</h3>' +
               '<p class="game-tagline">' + esc(p.tagline) + '</p>' +
               (tags ? '<ul class="game-tags">' + tags + '</ul>' : '') +
-              (p.playtesterNotes
-                ? '<div class="playtester-notes"><p class="playtester-notes-label">Playtester notes</p><p>' + esc(p.playtesterNotes) + '</p></div>'
+              (p.feedbackPrompt
+                ? '<div class="playtester-notes"><p class="playtester-notes-label">Notes for playtesters</p><p>' + esc(p.feedbackPrompt) + '</p></div>'
                 : '') +
               '<div class="game-actions">' +
                 '<a class="btn btn-primary btn-sm" href="play.html?game=' + encodeURIComponent(p.slug) + '">Play the prototype</a>' +
