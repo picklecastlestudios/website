@@ -67,16 +67,62 @@ const SITE = {
       price: "Free — donations welcome",            // no charge; Ko-Fi carries the ask
       embed: { type: "iframe", url: "https://picklecastlestudios.github.io/shattered-archive/" }
     },
+    /* No Civ, Just Deer moved to the Prototypes section below (2026-07-26)
+       — it's still an early build, not a finished/priced game yet. See
+       the `prototypes` array. Its old cover, assets/games/no-civ-just-deer.jpg,
+       is unused for now (kept in case it returns here once it ships). */
+  ],
+
+  /* ============================================================
+     PROTOTYPES  —  early, playable builds that aren't finished games
+     yet. Kept separate from `games` on purpose: no price, no "coming
+     soon" state (if it's here, it's playable), and always carries real
+     playtester notes so visitors know exactly how early this is.
+
+     Same `embed` shape as games (see above) — these are self-hosted
+     ("local") single-file builds under games/<slug>/, since a private
+     repo (dungeon-leader) can't have a public GitHub Pages, and a
+     prototype snapshot is expected to lag its game repo rather than
+     mirror it live like the iframe-embedded finished games do.
+
+     `playtesterNotes` — a few honest sentences, written after actually
+     playing the build. Say what worked, say what didn't, say what
+     wasn't tested. Never polish this into ad copy.
+     ============================================================ */
+  prototypes: [
+    {
+      slug: "dungeon-leader",
+      title: "Dungeon Leader",
+      tagline: "Carve a monster's dungeon out of the mountain, paint rooms, " +
+               "furnish them, and watch your minions actually live there. " +
+               "Raids and growth are a later layer — right now it's just the toy.",
+      tags: ["3D", "Dungeon builder"],
+      cover: "assets/games/dungeon-leader.jpg",
+      embed: { type: "local", path: "games/dungeon-leader/" },
+      playtesterNotes: "We gave this a real playtest before posting it. " +
+        "Carving out rooms, painting them by type, and watching a minion " +
+        "actually wander around and use the space is already satisfying " +
+        "with zero combat or scoring — which was the whole test for this " +
+        "stage. Rough edges: the opening view is dark and empty until " +
+        "you've carved a few tiles (no zoom yet), and it's not always " +
+        "obvious what's nudging the mood dial. No raids, multiple floors, " +
+        "or saving yet — that's next."
+    },
     {
       slug: "no-civ-just-deer",
       title: "No Civ, Just Deer",
       tagline: "A cute chibi colony sim about deer who are a little done " +
                "with humans and decide to build their own civilization first.",
-      tags: ["Colony sim", "iOS — coming soon"],
-      cover: "assets/games/no-civ-just-deer.jpg",
-      status: "soon",
-      price: "~$4 (planned)",                       // not final — App Store pricing TBD
-      embed: { type: "external", url: "" }           // fill in once it's on the App Store
+      tags: ["Colony sim", "Stealth"],
+      cover: "assets/games/no-civ-just-deer-prototype.jpg",
+      embed: { type: "local", path: "games/no-civ-just-deer-prototype/" },
+      playtesterNotes: "We played through the opening of this one too. " +
+        "Picking a plot, placing the Deer Lodge, and putting up a " +
+        "Woodcutter's Hut all felt confident and full of personality, " +
+        "right down to the flavor text. We didn't get to the core " +
+        "resource-gathering drag-and-drop or the ranger encounters this " +
+        "round, so treat this as a first look at the on-ramp rather than " +
+        "the whole game."
     }
   ],
 

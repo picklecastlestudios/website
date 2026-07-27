@@ -198,6 +198,7 @@ p  { margin: 0 0 1rem; }
 .section-games h2 { color: var(--cream); }
 .section-games .eyebrow { color: #FFB784; }
 .section-games .section-lede { color: rgba(253,242,226,.82); }
+.section-prototypes { background: var(--cream-soft); border-top: var(--border) dashed var(--ink); border-bottom: var(--border) dashed var(--ink); }
 .section-news { background: var(--cream); }
 .section-about { background: var(--cream-soft); border-top: var(--border) solid var(--ink); }
 
@@ -240,12 +241,43 @@ p  { margin: 0 0 1rem; }
   color: var(--ink-soft); margin-left: auto;
 }
 
+/* ---------- Prototype cards ---------- */
+/* Dashed border instead of the finished-game card's solid one — a quiet,
+   consistent visual cue that this is a work in progress, not a shipped
+   game, wherever the card shows up. */
+.prototype-card { border-style: dashed; box-shadow: var(--shadow-sm); }
+.prototype-card:hover { box-shadow: 8px 8px 0 var(--ink); }
+.cover-wrap { position: relative; }
+.cover-wrap .game-cover { border-bottom: var(--border) dashed var(--ink); }
+.prototype-badge {
+  position: absolute; top: .7rem; left: .7rem;
+  font-family: var(--font-pixel); font-size: .55rem; letter-spacing: .04em;
+  text-transform: uppercase;
+  background: var(--orange); color: var(--ink);
+  border: 2px solid var(--ink); border-radius: 999px;
+  padding: .4rem .65rem;
+}
+.playtester-notes {
+  background: var(--white);
+  border: 2px dashed var(--ink-soft);
+  border-radius: var(--radius);
+  padding: .9rem 1rem;
+  margin: 0 0 1.1rem;
+}
+.playtester-notes-label {
+  font-family: var(--font-pixel); font-size: .5rem; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--orange-deep);
+  margin: 0 0 .5rem;
+}
+.playtester-notes p:last-child { margin: 0; color: var(--ink-soft); font-size: .92rem; }
+
 .empty-note {
   color: var(--cream); background: rgba(0,0,0,.15);
   border: var(--border) dashed rgba(253,242,226,.5);
   border-radius: var(--radius); padding: 1.5rem; text-align: center;
 }
 .section-news .empty-note { color: var(--ink-soft); background: transparent; border-color: var(--ink-soft); }
+.section-prototypes .empty-note { color: var(--ink-soft); background: transparent; border-color: var(--ink-soft); }
 
 /* ---------- News ---------- */
 .news-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }

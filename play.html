@@ -35,7 +35,11 @@
   });
 
   var slug = new URLSearchParams(location.search).get("game");
-  var game = (SITE.games || []).filter(function (g) { return g.slug === slug; })[0];
+  // Prototypes share this same play page — check games first, then
+  // prototypes, so a slug never has to be unique across both lists but
+  // an accidental collision still favors the finished game.
+  var game = (SITE.games || []).concat(SITE.prototypes || [])
+    .filter(function (g) { return g.slug === slug; })[0];
   var mount = document.getElementById("play-mount");
 
   if (!game) {

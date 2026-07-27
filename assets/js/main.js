@@ -63,6 +63,37 @@
     }
   }
 
+  /* ---------- Prototypes ---------- */
+  var protoGrid = document.getElementById("prototypes-grid");
+  if (protoGrid) {
+    var protos = SITE.prototypes || [];
+    if (!protos.length) {
+      document.getElementById("prototypes-empty").hidden = false;
+    } else {
+      protoGrid.innerHTML = protos.map(function (p) {
+        var tags = (p.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+        return '' +
+          '<article class="game-card prototype-card">' +
+            '<div class="cover-wrap">' +
+              '<img class="game-cover" src="' + esc(p.cover) + '" alt="' + esc(p.title) + ' prototype cover art" loading="lazy">' +
+              '<span class="prototype-badge">Prototype</span>' +
+            '</div>' +
+            '<div class="game-body">' +
+              '<h3 class="game-title">' + esc(p.title) + '</h3>' +
+              '<p class="game-tagline">' + esc(p.tagline) + '</p>' +
+              (tags ? '<ul class="game-tags">' + tags + '</ul>' : '') +
+              (p.playtesterNotes
+                ? '<div class="playtester-notes"><p class="playtester-notes-label">Playtester notes</p><p>' + esc(p.playtesterNotes) + '</p></div>'
+                : '') +
+              '<div class="game-actions">' +
+                '<a class="btn btn-primary btn-sm" href="play.html?game=' + encodeURIComponent(p.slug) + '">Play the prototype</a>' +
+              '</div>' +
+            '</div>' +
+          '</article>';
+      }).join("");
+    }
+  }
+
   /* ---------- News ---------- */
   var list = document.getElementById("news-list");
   if (list) {
