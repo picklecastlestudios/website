@@ -9,6 +9,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* Bug report / feedback widget — floating button, shown over every played
+     game since this page is the one shared mount point for all of them. */
+  .pc-fab{
+    position:fixed;bottom:16px;right:16px;z-index:9999;width:52px;height:52px;
+    border-radius:50%;background:#FDF2E2;border:3px solid #F96318;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4);
+    transition:.15s ease;
+  }
+  .pc-fab:hover{transform:scale(1.06);}
+  .pc-fab:focus-visible{outline:3px solid #F96318;outline-offset:3px;}
+  .pc-fab svg{width:28px;height:28px;}
+  .pc-fab-menu{
+    position:fixed;bottom:76px;right:16px;z-index:9999;display:flex;
+    flex-direction:column;gap:8px;align-items:flex-end;
+  }
+  .pc-fab-item{
+    display:flex;align-items:center;gap:8px;background:#2D5D2E;color:#FDF2E2;
+    border:none;border-radius:999px;padding:6px 14px 6px 8px;cursor:pointer;
+    font-family:'Fredoka',system-ui,sans-serif;font-size:.85rem;
+    opacity:0;transform:translateY(6px) scale(.95);transition:.15s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,.3);
+  }
+  .pc-fab-item:hover{background:#F96318;}
+  .pc-fab-item:focus-visible{outline:3px solid #F96318;outline-offset:2px;}
+  .pc-fab-menu.open .pc-fab-item{opacity:1;transform:translateY(0) scale(1);}
+  .pc-fab-item img{width:22px;height:22px;object-fit:contain;flex:none;}
+  @media (prefers-reduced-motion:reduce){
+    .pc-fab,.pc-fab-item{transition:none;}
+  }
+</style>
 </head>
 <body class="play-shell">
   <div class="wrap play-bar">
@@ -90,6 +121,56 @@
       ? "This game is " + game.price.charAt(0).toLowerCase() + game.price.slice(1) + "."
       : "Enjoying this? Consider supporting the studio.";
     support.hidden = false;
+  }
+
+  // Bug report / feedback widget — same gating as the Ko-Fi callout above
+  // (no point offering it on the "not out yet" / external-store state, since
+  // there's no actual playable build on this page to react to). GAME_NAME
+  // comes straight from content.js, so nothing here needs per-game editing.
+  if (game.embed.type !== "external") {
+    var GAME_NAME = game.title;
+    var MAILTO_BASE = "mailto:pickle.castle.studios@gmail.com";
+
+    var fabMenu = document.createElement("div");
+    fabMenu.className = "pc-fab-menu";
+    fabMenu.id = "pcFabMenu";
+    fabMenu.innerHTML =
+      '<button class="pc-fab-item" id="pcBugFab">' +
+        '<img src="assets/icons/icon-report-bug.png" alt=""> Report a bug' +
+      '</button>' +
+      '<button class="pc-fab-item" id="pcFeedbackFab">' +
+        '<img src="assets/icons/icon-feedback.png" alt=""> Give feedback' +
+      '</button>';
+
+    var fabBtn = document.createElement("button");
+    fabBtn.className = "pc-fab";
+    fabBtn.id = "pcFabBtn";
+    fabBtn.setAttribute("aria-haspopup", "true");
+    fabBtn.setAttribute("aria-expanded", "false");
+    fabBtn.setAttribute("aria-label", "Report a bug or give feedback");
+    fabBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none">' +
+        '<circle cx="12" cy="13" r="7.5" fill="#FDF2E2" stroke="#262926" stroke-width="1.4"/>' +
+        '<path d="M6 9 Q4 5 7 4" stroke="#262926" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+        '<path d="M18 9 Q20 5 17 4" stroke="#262926" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+        '<circle cx="9.3" cy="12" r="1.15" fill="#262926"/>' +
+        '<circle cx="14.7" cy="12" r="1.15" fill="#262926"/>' +
+        '<path d="M10 16.3 Q12 17.6 14 16.3" stroke="#262926" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
+      '</svg>';
+
+    document.body.appendChild(fabMenu);
+    document.body.appendChild(fabBtn);
+
+    fabBtn.addEventListener("click", function () {
+      var open = fabMenu.classList.toggle("open");
+      fabBtn.setAttribute("aria-expanded", open);
+    });
+    document.getElementById("pcBugFab").addEventListener("click", function () {
+      window.location.href = MAILTO_BASE + "?subject=" + encodeURIComponent("[" + GAME_NAME + "] Bug Report");
+    });
+    document.getElementById("pcFeedbackFab").addEventListener("click", function () {
+      window.location.href = MAILTO_BASE + "?subject=" + encodeURIComponent("[" + GAME_NAME + "] Feedback");
+    });
   }
 })();
 </script>
