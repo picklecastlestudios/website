@@ -66,11 +66,15 @@ function copyOrPrompt(text, outEl, btnEl) {
 }
 
 // Final "here's your report" screen — mailto (prefilled body) + copy fallback.
+// The copy fallback prepends the destination address to what's shown/copied
+// (but NOT to the mailto body — the mail client already fills in "To:") so a
+// player pasting this into Discord/Notes/wherever still knows where it goes.
 export function showReport({ title = 'Report ready', text, subject, mailto }) {
+  const copyText = mailto ? `To: ${mailto}\n\n${text}` : text;
   openModal(
     `<h3>${esc(title)}</h3>
      <p class="rpt-sub">Send it (opens your mail app) or copy it if that doesn't work.</p>
-     <textarea class="rpt-fld rpt-out" id="rptOut" readonly>${esc(text)}</textarea>
+     <textarea class="rpt-fld rpt-out" id="rptOut" readonly>${esc(copyText)}</textarea>
      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
        <button class="pc-btn pc-btn--primary" data-a="email">Send Email</button>
        <button class="pc-btn pc-btn--secondary" data-a="copy">Copy to Clipboard</button>
@@ -86,7 +90,7 @@ export function showReport({ title = 'Report ready', text, subject, mailto }) {
       if (action === 'copy') {
         const out = document.getElementById('rptOut');
         const btn = document.querySelector('[data-a="copy"]');
-        copyOrPrompt(text, out, btn);
+        copyOrPrompt(copyText, out, btn);
       }
     }
   );
