@@ -1,0 +1,139 @@
+/* Three worked theme presets for buttons.css, proving the token layer spans
+   genuinely distinct visual identities, not just color swaps.
+   Usage: load after buttons.css, then set data-theme on <html> (or any
+   ancestor of your buttons):
+     <html data-theme="pickle-castle">   or  "cozy"  or  "pixel"
+   Each block ONLY reassigns --btn-* custom properties (plus a couple of
+   cosmetic extras like image-rendering that aren't sensible as tokens) —
+   copy a block as the starting point for a new game's theme rather than
+   editing buttons.css itself. */
+
+/* ---------------------------------------------------------------------
+   pickle-castle — the studio's own website brand (assets/css/style.css),
+   ported 1:1: cream/orange/green, pill shape, hard offset-shadow press.
+   This is the "home" identity — closest to buttons.css's own defaults.
+--------------------------------------------------------------------- */
+:root[data-theme="pickle-castle"],
+[data-theme="pickle-castle"] {
+  --btn-radius: 999px;
+  --btn-border-width: 3px;
+  --btn-border-style: solid;
+  --btn-border-color: #262926;
+  --btn-font-family: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --btn-font-weight: 600;
+
+  --btn-ink: #262926;
+  --btn-shadow-color: var(--btn-ink);
+  --btn-shadow-rest: 4px 4px 0 var(--btn-shadow-color);
+  --btn-shadow-hover: 6px 6px 0 var(--btn-shadow-color);
+  --btn-shadow-active: 1px 1px 0 var(--btn-shadow-color);
+  --btn-shadow-rest-sm: 3px 3px 0 var(--btn-shadow-color);
+  --btn-shadow-hover-sm: 4px 4px 0 var(--btn-shadow-color);
+
+  --btn-primary-bg: #F96318;
+  --btn-primary-fg: #262926;
+  --btn-secondary-bg: #FFFDF8;
+  --btn-secondary-fg: #262926;
+  --btn-ghost-bg: #FFFDF8;
+  --btn-ghost-fg: #2D5D2E;
+  --btn-danger-bg: #C6433A;   /* not in the source site (no danger button exists there yet) — picked to sit in-family with --orange-deep */
+  --btn-danger-fg: #FFFDF8;
+
+  --btn-disabled-bg: #F6E7D2;
+  --btn-disabled-fg: #4B524B;
+  --btn-disabled-border: #E4D2B2;
+  --btn-disabled-shadow: none;
+
+  --btn-focus-color: #F96318;
+}
+
+/* ---------------------------------------------------------------------
+   cozy — adapted from discord-button-style-kit.html's "2D Cozy" skin:
+   dashed border, warm cream/orange gradient, playful lift+rotate on hover.
+   Needs the Baloo 2 font loaded to look right; falls back to a rounded
+   system sans otherwise.
+--------------------------------------------------------------------- */
+:root[data-theme="cozy"],
+[data-theme="cozy"] {
+  --btn-radius: 999px;
+  --btn-border-width: 3px;
+  --btn-border-style: dashed;
+  --btn-border-color: #f2a65a;
+  --btn-font-family: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+  --btn-font-weight: 800;
+
+  --btn-lift: translate(-3px, -3px) rotate(-1deg);
+  --btn-press: translateY(2px);
+  --btn-transition: transform 0.2s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s ease;
+
+  --btn-shadow-rest: 0 6px 0 #e8a860, 0 10px 16px rgba(232,168,96,0.35);
+  --btn-shadow-hover: 0 6px 0 #e8a860, 0 10px 16px rgba(232,168,96,0.35); /* the lift+rotate transform carries hover, not a bigger shadow */
+  --btn-shadow-active: 0 2px 0 #e8a860;
+  --btn-shadow-rest-sm: 0 4px 0 #e8a860, 0 6px 10px rgba(232,168,96,0.3);
+  --btn-shadow-hover-sm: var(--btn-shadow-rest-sm);
+
+  --btn-primary-bg: linear-gradient(180deg, #ffe9c7, #ffd9a0);
+  --btn-primary-fg: #6b4a3a;
+  --btn-secondary-bg: #fff6ea;
+  --btn-secondary-fg: #6b4a3a;
+  --btn-ghost-bg: #ffffff;
+  --btn-ghost-fg: #9e5537;   /* darkened from the kit's #e2794f — 2.97:1 on white failed AA, this clears 5.5:1 */
+  --btn-danger-bg: #925864;  /* darkened from a softer #e0889a — 2.41:1 failed AA badly, this clears 5.1:1 */
+  --btn-danger-fg: #fff6ea;
+
+  --btn-disabled-bg: #f3e6d3;
+  --btn-disabled-fg: #b3a08d;
+  --btn-disabled-border: #e6d2ae;
+  --btn-disabled-shadow: none;
+
+  --btn-focus-color: #e2794f;
+}
+
+/* ---------------------------------------------------------------------
+   pixel — adapted from discord-button-style-kit.html's "2D Pixelated"
+   skin: sharp corners, thick border, inset bevel instead of a drop shadow,
+   fast/snappy transitions, no hover lift (matches the source, which only
+   reacts on press). The bevel uses translucent black/white insets rather
+   than the kit's hardcoded purple-specific bevel hex, so it reads correctly
+   against ANY variant's background color, not just primary's indigo.
+--------------------------------------------------------------------- */
+:root[data-theme="pixel"],
+[data-theme="pixel"] {
+  --btn-radius: 0;
+  --btn-border-width: 4px;
+  --btn-border-style: solid;
+  --btn-border-color: #1c1330;
+  --btn-font-family: "Press Start 2P", monospace;
+  --btn-font-weight: 400;
+  --btn-font-size: 0.7rem;
+  --btn-letter-spacing: 0.5px;
+  --btn-transition: transform 0.05s, box-shadow 0.05s;
+
+  --btn-lift: none;   /* source skin has no :hover transform, only :active */
+  --btn-press: translateY(4px);
+
+  --btn-ink: #1c1330;
+  --btn-shadow-color: var(--btn-ink);
+  --btn-shadow-rest: inset -4px -4px 0 0 rgba(0,0,0,0.3), inset 4px 4px 0 0 rgba(255,255,255,0.35), 0 4px 0 0 var(--btn-shadow-color);
+  --btn-shadow-hover: var(--btn-shadow-rest);
+  --btn-shadow-active: inset -4px -4px 0 0 rgba(0,0,0,0.3), inset 4px 4px 0 0 rgba(255,255,255,0.35);
+  --btn-shadow-rest-sm: inset -3px -3px 0 0 rgba(0,0,0,0.3), inset 3px 3px 0 0 rgba(255,255,255,0.35), 0 3px 0 0 var(--btn-shadow-color);
+  --btn-shadow-hover-sm: var(--btn-shadow-rest-sm);
+
+  --btn-primary-bg: #6c5ce7;
+  --btn-primary-fg: #ffffff;
+  --btn-secondary-bg: #4a4e69;
+  --btn-secondary-fg: #ffffff;
+  --btn-ghost-bg: #2b2140;
+  --btn-ghost-fg: #c9bfff;
+  --btn-danger-bg: #c13e3e;  /* darkened from the shared #d64545 red — 4.38:1 just missed AA at this font size, this clears 5.2:1 */
+  --btn-danger-fg: #ffffff;
+
+  --btn-disabled-bg: #3a3a44;
+  --btn-disabled-fg: #83839a;
+  --btn-disabled-border: #1c1330;
+  --btn-disabled-shadow: none;
+
+  --btn-focus-color: #9c8fef;
+}
+[data-theme="pixel"] .pc-btn { image-rendering: pixelated; }

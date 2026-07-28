@@ -1,0 +1,148 @@
+/* Unified button system — one set of classes, themed per game via CSS custom
+   properties. The default tokens below are an intentionally neutral
+   placeholder palette, not a real game's brand — copy themes.css's pattern
+   (a [data-theme="x"] block that only reassigns --btn-* variables) to make a
+   new skin. See themes.css for 3 worked examples (pickle-castle / cozy / pixel).
+   Usage:
+     <link rel="stylesheet" href="buttons.css">
+     <link rel="stylesheet" href="themes.css">   <!-- optional, or write your own -->
+     <html data-theme="pickle-castle">           <!-- picks the theme -->
+     <button class="pc-btn pc-btn--primary">Play</button>
+     <button class="pc-btn pc-btn--ghost pc-btn--sm">Cancel</button>
+     <a class="pc-btn pc-btn--icon" aria-label="Mute" href="#">♪</a>
+     <button class="pc-btn pc-btn--danger" aria-disabled="true">Delete</button>
+   Variants: --primary --secondary --ghost --danger (default = neutral/base).
+   Sizes:    (default) --sm --icon (circular, fixed size, for FABs/icon-only).
+   States handled: hover, active/press, :focus-visible, disabled
+   (both native [disabled] and [aria-disabled="true"] — use aria-disabled on
+   an <a> since disabled only works on real form controls; the JS helper in
+   buttons.js keeps this in sync with real click-blocking). */
+
+:root {
+  /* base shape/motion — the "3D press" mechanic every theme shares */
+  --btn-radius: 999px;
+  --btn-border-width: 3px;
+  --btn-font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --btn-font-weight: 700;
+  --btn-font-size: 0.95rem;
+  --btn-letter-spacing: normal;
+  --btn-transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  --btn-lift: translate(-2px, -2px);   /* hover */
+  --btn-press: translate(2px, 2px);    /* active */
+  --btn-focus-color: #4d90fe;
+  --btn-focus-offset: 2px;
+
+  /* neutral placeholder palette — swap via a [data-theme] block, don't edit here */
+  --btn-ink: #24242b;
+  --btn-border-style: solid;
+  --btn-border-color: var(--btn-ink);
+  --btn-shadow-color: var(--btn-ink);
+  --btn-shadow-rest: 4px 4px 0 var(--btn-shadow-color);
+  --btn-shadow-hover: 6px 6px 0 var(--btn-shadow-color);
+  --btn-shadow-active: 1px 1px 0 var(--btn-shadow-color);
+  --btn-shadow-rest-sm: 3px 3px 0 var(--btn-shadow-color);
+  --btn-shadow-hover-sm: 4px 4px 0 var(--btn-shadow-color);
+
+  --btn-primary-bg: #4d6bfe;
+  --btn-primary-fg: #ffffff;
+  --btn-secondary-bg: #e7e7ee;
+  --btn-secondary-fg: var(--btn-ink);
+  --btn-ghost-bg: #ffffff;
+  --btn-ghost-fg: #4d6bfe;
+  --btn-danger-bg: #d64545;
+  --btn-danger-fg: #ffffff;
+
+  --btn-disabled-bg: #e7e7ee;
+  --btn-disabled-fg: #9a9aa8;
+  --btn-disabled-shadow: none;
+  --btn-disabled-border: #c7c7d4;
+}
+
+.pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  box-sizing: border-box;
+  min-height: 44px;                 /* WCAG 2.5.5 touch target */
+  padding: 0.75em 1.4em;
+  border-radius: var(--btn-radius);
+  border: var(--btn-border-width) var(--btn-border-style) var(--btn-border-color);
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+  font-family: var(--btn-font-family);
+  font-weight: var(--btn-font-weight);
+  font-size: var(--btn-font-size);
+  letter-spacing: var(--btn-letter-spacing);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: var(--btn-shadow-rest);
+  transition: var(--btn-transition);
+}
+.pc-btn .pc-btn__icon { width: 1.2em; height: 1.2em; flex: none; }
+
+.pc-btn:hover        { transform: var(--btn-lift); box-shadow: var(--btn-shadow-hover); }
+.pc-btn:active        { transform: var(--btn-press); box-shadow: var(--btn-shadow-active); }
+.pc-btn:focus-visible {
+  outline: 3px solid var(--btn-focus-color);
+  outline-offset: var(--btn-focus-offset);
+}
+
+/* --- variants (color only — shape/motion stay shared) --- */
+.pc-btn--primary   { background: var(--btn-primary-bg);   color: var(--btn-primary-fg); }
+.pc-btn--secondary { background: var(--btn-secondary-bg); color: var(--btn-secondary-fg); }
+.pc-btn--ghost      { background: var(--btn-ghost-bg);     color: var(--btn-ghost-fg); }
+.pc-btn--danger      { background: var(--btn-danger-bg);   color: var(--btn-danger-fg); }
+
+/* --- sizes --- */
+.pc-btn--sm {
+  padding: 0.5em 1em;
+  font-size: 0.85rem;
+  min-height: 36px;                 /* intentionally sub-44px: pair with pc-btn (44px+) nearby, never the only tap target on a touch screen */
+  box-shadow: var(--btn-shadow-rest-sm);
+}
+.pc-btn--sm:hover { box-shadow: var(--btn-shadow-hover-sm); }
+
+.pc-btn--icon {
+  width: 52px;
+  height: 52px;
+  min-height: 52px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+/* --- disabled: both real [disabled] and aria-disabled (for non-form elements like <a>) --- */
+.pc-btn:disabled,
+.pc-btn[aria-disabled="true"] {
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-fg);
+  border-color: var(--btn-disabled-border);
+  box-shadow: var(--btn-disabled-shadow);
+  cursor: not-allowed;
+  pointer-events: none;             /* belt-and-suspenders for <a aria-disabled>; buttons.js also guards the click handler */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-btn { transition: none; }
+  .pc-btn:hover, .pc-btn:active { transform: none; }
+}
+
+/* --- FAB action menu: a pc-btn--icon trigger that expands a small stack of
+   labeled pc-btn pills above it (bug-report/feedback is the reference use
+   case — see bug-report.js's createBugFeedbackFab()). Toggle the --open
+   modifier via JS; buttons.js's createFabMenu() does this for you. --- */
+.pc-fab-wrap { position: fixed; bottom: 20px; right: 20px; z-index: 40; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.pc-fab-menu { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.pc-fab-menu .pc-btn {
+  opacity: 0;
+  transform: translateY(6px) scale(0.95);
+  pointer-events: none;
+  transition: var(--btn-transition), opacity 0.15s ease;
+}
+.pc-fab-menu--open .pc-btn { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-fab-menu .pc-btn { transition: opacity 0.15s ease; }
+}

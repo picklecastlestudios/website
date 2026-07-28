@@ -9,39 +9,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/vendor/game-forge/buttons.css">
+<link rel="stylesheet" href="assets/vendor/game-forge/themes.css">
 <style>
-  /* Bug report / feedback widget — floating button, shown over every played
-     game since this page is the one shared mount point for all of them. */
-  .pc-fab{
-    position:fixed;bottom:16px;right:16px;z-index:9999;width:52px;height:52px;
-    border-radius:50%;background:#FDF2E2;border:3px solid #F96318;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4);
-    transition:.15s ease;
+  /* bug-report.js/modal.js ship no CSS of their own by design ("bring your
+     own") — this is that CSS, mapped onto the site's own brand tokens from
+     style.css so the report form matches the rest of the page exactly. */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:10000;background:rgba(38,41,38,.55);
+    display:flex;align-items:center;justify-content:center;padding:16px;
+    overflow-y:auto;
   }
-  .pc-fab:hover{transform:scale(1.06);}
-  .pc-fab:focus-visible{outline:3px solid #F96318;outline-offset:3px;}
-  .pc-fab svg{width:28px;height:28px;}
-  .pc-fab-menu{
-    position:fixed;bottom:76px;right:16px;z-index:9999;display:flex;
-    flex-direction:column;gap:8px;align-items:flex-end;
+  .modal-box{
+    background:var(--cream);border:var(--border) solid var(--ink);
+    border-radius:var(--radius-lg);box-shadow:var(--shadow);
+    width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow-y:auto;
+    padding:20px;font-family:var(--font-body);color:var(--ink);
   }
-  .pc-fab-item{
-    display:flex;align-items:center;gap:8px;background:#2D5D2E;color:#FDF2E2;
-    border:none;border-radius:999px;padding:6px 14px 6px 8px;cursor:pointer;
-    font-family:'Fredoka',system-ui,sans-serif;font-size:.85rem;
-    opacity:0;transform:translateY(6px) scale(.95);transition:.15s ease;
-    box-shadow:0 4px 10px rgba(0,0,0,.3);
+  .modal-box h3{font-family:var(--font-display);margin:0 0 4px;font-size:1.25rem;}
+  .rpt-sub{margin:0 0 14px;font-size:.88rem;color:var(--ink-soft);}
+  .rpt-fld-label{display:block;font-family:var(--font-display);font-size:.82rem;margin:12px 0 4px;}
+  .rpt-fld{
+    width:100%;box-sizing:border-box;font-family:var(--font-body);font-size:.95rem;
+    padding:9px 10px;border:2px solid var(--ink);border-radius:10px;
+    background:var(--white);color:var(--ink);resize:vertical;
   }
-  .pc-fab-item:hover{background:#F96318;}
-  .pc-fab-item:focus-visible{outline:3px solid #F96318;outline-offset:2px;}
-  .pc-fab-menu.open .pc-fab-item{opacity:1;transform:translateY(0) scale(1);}
-  .pc-fab-item img{width:22px;height:22px;object-fit:contain;flex:none;}
-  @media (prefers-reduced-motion:reduce){
-    .pc-fab,.pc-fab-item{transition:none;}
-  }
+  textarea.rpt-fld{min-height:80px;}
+  .rpt-fld:focus{outline:3px solid var(--orange);outline-offset:1px;}
+  .rpt-out{min-height:150px;font-size:.8rem;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap;}
 </style>
 </head>
-<body class="play-shell">
+<body class="play-shell" data-theme="pickle-castle">
   <div class="wrap play-bar">
     <a class="btn btn-ghost btn-sm" href="index.html#games">← All games</a>
     <h1 id="play-title">Loading…</h1>
@@ -127,52 +125,24 @@
   // (no point offering it on the "not out yet" / external-store state, since
   // there's no actual playable build on this page to react to). GAME_NAME
   // comes straight from content.js, so nothing here needs per-game editing.
+  // Built on the shared game-forge button system (vendored in
+  // assets/vendor/game-forge/ — see the README there) instead of a bespoke
+  // FAB: fixes a real bug the old inline version had (bare `mailto:` with
+  // only a subject, no body — silently no-ops with no mail client configured)
+  // by getting the mailto+copy-to-clipboard fallback for free.
   if (game.embed.type !== "external") {
-    var GAME_NAME = game.title;
-    var MAILTO_BASE = "mailto:pickle.castle.studios@gmail.com";
-
-    var fabMenu = document.createElement("div");
-    fabMenu.className = "pc-fab-menu";
-    fabMenu.id = "pcFabMenu";
-    fabMenu.innerHTML =
-      '<button class="pc-fab-item" id="pcBugFab">' +
-        '<img src="assets/icons/icon-report-bug.png" alt=""> Report a bug' +
-      '</button>' +
-      '<button class="pc-fab-item" id="pcFeedbackFab">' +
-        '<img src="assets/icons/icon-feedback.png" alt=""> Give feedback' +
-      '</button>';
-
-    var fabBtn = document.createElement("button");
-    fabBtn.className = "pc-fab";
-    fabBtn.id = "pcFabBtn";
-    fabBtn.setAttribute("aria-haspopup", "true");
-    fabBtn.setAttribute("aria-expanded", "false");
-    fabBtn.setAttribute("aria-label", "Report a bug or give feedback");
-    fabBtn.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="none">' +
-        '<circle cx="12" cy="13" r="7.5" fill="#FDF2E2" stroke="#262926" stroke-width="1.4"/>' +
-        '<path d="M6 9 Q4 5 7 4" stroke="#262926" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
-        '<path d="M18 9 Q20 5 17 4" stroke="#262926" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
-        '<circle cx="9.3" cy="12" r="1.15" fill="#262926"/>' +
-        '<circle cx="14.7" cy="12" r="1.15" fill="#262926"/>' +
-        '<path d="M10 16.3 Q12 17.6 14 16.3" stroke="#262926" stroke-width="1.3" fill="none" stroke-linecap="round"/>' +
-      '</svg>';
-
-    document.body.appendChild(fabMenu);
-    document.body.appendChild(fabBtn);
-
-    fabBtn.addEventListener("click", function () {
-      var open = fabMenu.classList.toggle("open");
-      fabBtn.setAttribute("aria-expanded", open);
-    });
-    document.getElementById("pcBugFab").addEventListener("click", function () {
-      window.location.href = MAILTO_BASE + "?subject=" + encodeURIComponent("[" + GAME_NAME + "] Bug Report");
-    });
-    document.getElementById("pcFeedbackFab").addEventListener("click", function () {
-      window.location.href = MAILTO_BASE + "?subject=" + encodeURIComponent("[" + GAME_NAME + "] Feedback");
-    });
+    window.__pcGameTitle = game.title;
   }
 })();
+</script>
+<script type="module">
+  import { createBugFeedbackFab } from "./assets/vendor/game-forge/bug-report.js";
+  if (window.__pcGameTitle) {
+    document.body.append(createBugFeedbackFab({
+      gameName: window.__pcGameTitle,
+      mailto: "pickle.castle.studios@gmail.com",
+    }));
+  }
 </script>
 </body>
 </html>
