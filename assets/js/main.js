@@ -33,15 +33,15 @@
         var isExternal = g.embed && g.embed.type === "external";
         var action;
         if (!playable) {
-          action = '<span class="btn btn-sm" aria-disabled="true">Coming soon</span>';
+          action = '<span class="pc-btn pc-btn--sm" aria-disabled="true">Coming soon</span>';
         } else if (isExternal) {
           // App Store / storefront listings link out directly — there's
           // nothing to embed in an iframe for a native app.
           action = g.embed.url
-            ? '<a class="btn btn-primary btn-sm" href="' + esc(g.embed.url) + '" target="_blank" rel="noopener">Get it</a>'
-            : '<span class="btn btn-sm" aria-disabled="true">Coming soon</span>';
+            ? '<a class="pc-btn pc-btn--primary pc-btn--sm" href="' + esc(g.embed.url) + '" target="_blank" rel="noopener">Get it</a>'
+            : '<span class="pc-btn pc-btn--sm" aria-disabled="true">Coming soon</span>';
         } else {
-          action = '<a class="btn btn-primary btn-sm" href="play.html?game=' + encodeURIComponent(g.slug) + '">Play now</a>';
+          action = '<a class="pc-btn pc-btn--primary pc-btn--sm" href="play.html?game=' + encodeURIComponent(g.slug) + '">Play now</a>';
         }
         var tags = (g.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
         // Price is stated per game, never globally — the site makes no blanket
@@ -86,7 +86,7 @@
                 ? '<div class="playtester-notes"><p class="playtester-notes-label">Notes for playtesters</p><p>' + esc(p.feedbackPrompt) + '</p></div>'
                 : '') +
               '<div class="game-actions">' +
-                '<a class="btn btn-primary btn-sm" href="play.html?game=' + encodeURIComponent(p.slug) + '">Play the prototype</a>' +
+                '<a class="pc-btn pc-btn--primary pc-btn--sm" href="play.html?game=' + encodeURIComponent(p.slug) + '">Play the prototype</a>' +
               '</div>' +
             '</div>' +
           '</article>';

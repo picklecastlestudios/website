@@ -86,38 +86,12 @@ p  { margin: 0 0 1rem; }
   margin: 0 0 1rem;
 }
 
-/* ---------- Buttons ---------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: .5rem;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.02rem;
-  text-decoration: none;
-  padding: .78rem 1.5rem;
-  border: var(--border) solid var(--ink);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--ink);
-  box-shadow: var(--shadow-sm);
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
-  cursor: pointer;
-}
-.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
-.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
-.btn-primary { background: var(--orange); color: var(--ink); }
-.btn-primary:hover { background: #FF7530; }
-.btn-ghost   { background: var(--white); color: var(--green); }
-.btn .ico    { width: 18px; height: 18px; flex: none; }
-.btn-sm      { padding: .5rem 1rem; font-size: .92rem; box-shadow: 3px 3px 0 var(--ink); }
-.btn-sm:hover { box-shadow: 4px 4px 0 var(--ink); }
-.btn-kofi    { background: var(--orange); color: var(--ink); }
-.btn-discord { background: var(--green); color: var(--cream); }
-.btn[aria-disabled="true"] {
-  background: var(--cream-soft); color: var(--ink-soft);
-  box-shadow: none; cursor: not-allowed; transform: none;
-  border-style: dashed;
-}
+/* ---------- Buttons ----------
+   Canonical .pc-btn system, vendored in assets/vendor/game-forge/
+   (buttons.css + themes.css, data-theme="pickle-castle" set on <body>).
+   Site-specific additions beyond the 4 core variants live here: */
+.pc-btn.pc-btn--discord { background: var(--green); color: var(--cream); }
+.pc-btn[aria-disabled="true"] { border-style: dashed; }
 
 /* ============================================================
    HEADER
@@ -136,12 +110,12 @@ p  { margin: 0 0 1rem; }
 @media (max-width: 760px) { .brand-logo { height: 42px; } }
 
 .site-nav { display: flex; align-items: center; gap: 1.4rem; }
-.site-nav > a:not(.btn) {
+.site-nav > a:not(.pc-btn) {
   font-family: var(--font-display); font-weight: 600;
   color: var(--ink); text-decoration: none; padding: .25rem 0;
   border-bottom: 3px solid transparent;
 }
-.site-nav > a:not(.btn):hover { color: var(--green); border-bottom-color: var(--orange); }
+.site-nav > a:not(.pc-btn):hover { color: var(--green); border-bottom-color: var(--orange); }
 
 .nav-toggle {
   display: none;
