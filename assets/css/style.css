@@ -341,6 +341,14 @@ p  { margin: 0 0 1rem; }
   aspect-ratio: auto; border: 0; border-radius: 0; box-shadow: none;
 }
 body.is-fs-locked { overflow: hidden; }
+/* Without this, the fullscreen overlay (z-index 9999, covers the whole
+   viewport) buries the Exit button under the game with no way back —
+   a real trap on iOS Safari, which has no requestFullscreen for arbitrary
+   elements and so relies entirely on this CSS-only mode with no Esc key
+   or OS gesture as a fallback exit. */
+body.is-fs-locked #fs-toggle {
+  position: fixed; top: .8rem; right: .8rem; z-index: 10000;
+}
 
 .play-support {
   display: flex; align-items: center; justify-content: center; gap: 1rem;
