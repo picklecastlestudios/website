@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playtester Guide — Pickle Castle Game Studios</title>
+<link rel="icon" href="assets/brand/emblem.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/vendor/game-forge/buttons.css">
+<link rel="stylesheet" href="assets/vendor/game-forge/themes.css">
+<style>
+  /* guide.js ships no CSS of its own — this maps the page onto the site's
+     own brand tokens from style.css, same approach play.html uses for the
+     bug-report modal. */
+  .guide-shell { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; }
+  .guide-bar {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    justify-content: space-between; padding: 16px 20px;
+  }
+  .guide-tagline { color: var(--ink-soft); margin: 0 0 24px; }
+  .guide-section { margin: 0 0 28px; }
+  .guide-section h2 { font-family: var(--font-display); font-size: 1.1rem; margin: 0 0 10px; }
+  .guide-section ul { margin: 0; padding-left: 1.2em; }
+  .guide-section li { margin: 0 0 6px; }
+  .guide-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .guide-out-label { font-family: var(--font-display); font-size: .82rem; margin: 0 0 6px; }
+  .guide-out {
+    width: 100%; box-sizing: border-box; min-height: 220px; font-size: .8rem;
+    font-family: ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap;
+    padding: 12px; border: 2px solid var(--ink); border-radius: 10px;
+    background: var(--white); color: var(--ink); resize: vertical;
+  }
+</style>
+</head>
+<body class="play-shell" data-theme="pickle-castle">
+  <div class="wrap guide-bar">
+    <a class="pc-btn pc-btn--ghost pc-btn--sm" href="index.html#prototypes">← All prototypes</a>
+    <a class="pc-btn pc-btn--primary pc-btn--sm" id="guide-play-link" href="#">Play the prototype →</a>
+  </div>
+
+  <div class="wrap guide-shell">
+    <h1 id="guide-title">Loading…</h1>
+    <p class="guide-tagline" id="guide-tagline"></p>
+
+    <div class="guide-section" id="guide-overview-section" hidden>
+      <h2>What's in this build</h2>
+      <p id="guide-overview"></p>
+    </div>
+
+    <div class="guide-section" id="guide-try-section" hidden>
+      <h2>Try this</h2>
+      <ul id="guide-try"></ul>
+    </div>
+
+    <div class="guide-section" id="guide-skip-section" hidden>
+      <h2>Not a bug — known gaps in this build</h2>
+      <ul id="guide-skip"></ul>
+    </div>
+
+    <div class="guide-section" id="guide-ask-section" hidden>
+      <h2>What we'd love to hear</h2>
+      <p id="guide-ask"></p>
+    </div>
+
+    <div class="guide-actions">
+      <button type="button" class="pc-btn pc-btn--primary" id="guide-email">Open as Email</button>
+      <button type="button" class="pc-btn pc-btn--secondary" id="guide-copy">Copy to Clipboard</button>
+      <a class="pc-btn pc-btn--ghost" href="#" data-link="discord">Discord →</a>
+    </div>
+
+    <p class="guide-out-label" id="guide-out-label" hidden>Or copy this by hand:</p>
+    <textarea class="guide-out" id="guide-out" readonly hidden></textarea>
+  </div>
+
+<script src="assets/js/content.js"></script>
+<script src="assets/js/guide.js"></script>
+</body>
+</html>

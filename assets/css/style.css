@@ -33,6 +33,11 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+/* [hidden] loses to any element's own `display` rule at equal specificity
+   (e.g. .pc-btn's `display: inline-flex`) since author styles always beat
+   the UA stylesheet regardless of source order — without this, a
+   `hidden`-toggled pc-btn (fs-toggle, guide-link, etc.) stays visible. */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
