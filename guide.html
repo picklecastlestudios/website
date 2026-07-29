@@ -15,18 +15,26 @@
   /* guide.js ships no CSS of its own — this maps the page onto the site's
      own brand tokens from style.css, same approach play.html uses for the
      bug-report modal. */
-  .guide-shell { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; }
+  /* .play-shell's body background is dark (--green-dark) — the default
+     global `body { color: var(--ink) }` is a near-black tone meant for the
+     light --cream pages, so it fails contrast here unless overridden. */
+  /* .guide-shell's `color` alone won't reach h1/h2 — the base stylesheet's
+     `h1, h2, h3 { color: var(--green) }` sets color directly on those
+     elements, and a direct rule always beats an inherited one regardless
+     of specificity. Override explicitly. */
+  .guide-shell { max-width: 720px; margin: 0 auto; padding: 32px 20px 60px; color: var(--cream); }
+  .guide-shell h1 { color: var(--cream); }
   .guide-bar {
     display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
     justify-content: space-between; padding: 16px 20px;
   }
-  .guide-tagline { color: var(--ink-soft); margin: 0 0 24px; }
+  .guide-tagline { color: var(--cream-soft); margin: 0 0 24px; }
   .guide-section { margin: 0 0 28px; }
-  .guide-section h2 { font-family: var(--font-display); font-size: 1.1rem; margin: 0 0 10px; }
+  .guide-section h2 { font-family: var(--font-display); font-size: 1.1rem; margin: 0 0 10px; color: var(--cream); }
   .guide-section ul { margin: 0; padding-left: 1.2em; }
   .guide-section li { margin: 0 0 6px; }
   .guide-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
-  .guide-out-label { font-family: var(--font-display); font-size: .82rem; margin: 0 0 6px; }
+  .guide-out-label { font-family: var(--font-display); font-size: .82rem; margin: 0 0 6px; color: var(--cream); }
   .guide-out {
     width: 100%; box-sizing: border-box; min-height: 220px; font-size: .8rem;
     font-family: ui-monospace, Menlo, Consolas, monospace; white-space: pre-wrap;
