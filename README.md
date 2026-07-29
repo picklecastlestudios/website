@@ -83,6 +83,7 @@ domain. `.nojekyll` stops GitHub from running Jekyll over the files.
 ```
 index.html              landing page
 play.html               generic game player (?game=<slug>)
+guide.html              playtester guide for a prototype (?game=<slug>)
 404.html
 CNAME                   custom domain for GitHub Pages
 assets/css/style.css    all styling

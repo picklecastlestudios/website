@@ -87,6 +87,9 @@
                 : '') +
               '<div class="game-actions">' +
                 '<a class="pc-btn pc-btn--primary pc-btn--sm" href="play.html?game=' + encodeURIComponent(p.slug) + '">Play the prototype</a>' +
+                (p.playtestGuide
+                  ? '<a class="pc-btn pc-btn--ghost pc-btn--sm" href="guide.html?game=' + encodeURIComponent(p.slug) + '">Playtester guide</a>'
+                  : '') +
               '</div>' +
             '</div>' +
           '</article>';

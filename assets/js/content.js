@@ -108,7 +108,27 @@ const SITE = {
         "tell us: does the carve-and-furnish loop feel good on its own? Does " +
         "the mood dial make sense without any explanation? Does the dark, " +
         "empty opening view feel like a fresh start or just empty? Rough " +
-        "edges are expected — let us know what you hit on Discord."
+        "edges are expected — let us know what you hit on Discord.",
+      // Same facts as feedbackPrompt above, split into a scannable guide for
+      // guide.html — kept in sync by hand since it's just a reorganization
+      // of what feedbackPrompt already says, not new claims about the build.
+      playtestGuide: {
+        overview: "This build is the core loop only: carve tiles, paint " +
+          "rooms, and watch a minion move in and start living there.",
+        tryThis: [
+          "Dig out a small home for a minion.",
+          "See if the mood dial makes sense without any explanation.",
+          "Notice how the dark, empty opening view feels — a fresh start, or just empty?"
+        ],
+        dontReportThese: [
+          "No combat yet.",
+          "No scoring yet.",
+          "No raids yet.",
+          "General rough edges — this is an early snapshot, not a finished build."
+        ],
+        feedbackAsk: "Does the carve-and-furnish loop feel good on its own? " +
+          "Let us know what you hit — and anything else on your mind — on Discord."
+      }
     },
     {
       slug: "no-civ-just-deer",
@@ -123,7 +143,22 @@ const SITE = {
         "gathering loop and ranger encounters aren't wired up yet, so " +
         "don't worry about finding those — instead tell us how the on-ramp " +
         "itself lands: is it clear what to do, does the tone work for you, " +
-        "would you want to keep playing? Drop your thoughts on Discord."
+        "would you want to keep playing? Drop your thoughts on Discord.",
+      playtestGuide: {
+        overview: "This build covers only the opening: pick a plot, place " +
+          "your Deer Lodge, and put up your first building.",
+        tryThis: [
+          "Pick a plot for your colony.",
+          "Place your Deer Lodge.",
+          "Put up your first building."
+        ],
+        dontReportThese: [
+          "The core gathering loop isn't wired up yet.",
+          "Ranger encounters aren't wired up yet."
+        ],
+        feedbackAsk: "Is it clear what to do? Does the tone work for you? " +
+          "Would you want to keep playing? Drop your thoughts on Discord."
+      }
     },
     {
       // Canonical build lives at github.com/picklecastlestudios/troubles-chase,
@@ -144,7 +179,20 @@ const SITE = {
         "does the difficulty feel fair as the chase speeds up, are the " +
         "obstacles (sprinklers, crate stacks) readable enough to react to, " +
         "and is it clear what's happening when you get caught? Drop your " +
-        "thoughts on Discord."
+        "thoughts on Discord.",
+      playtestGuide: {
+        overview: "Troubles is unlocked from the start; the other five " +
+          "pets (and the cat) unlock as you rack up distance.",
+        tryThis: [
+          "Run a few times — don't worry about unlocking every pet in one sitting.",
+          "Pay attention to how the difficulty feels as the chase speeds up.",
+          "See how readable the obstacles (sprinklers, crate stacks) are.",
+          "Notice what happens, and how clear it is, when you get caught."
+        ],
+        feedbackAsk: "Does the difficulty feel fair as the chase speeds up? " +
+          "Are the obstacles readable enough to react to? Is it clear what's " +
+          "happening when you get caught? Drop your thoughts on Discord."
+      }
     }
   ],
 

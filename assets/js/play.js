@@ -25,6 +25,12 @@
   document.title = game.title + " — Pickle Castle Game Studios";
   document.getElementById("play-title").textContent = game.title;
 
+  if (game.playtestGuide) {
+    var guideLink = document.getElementById("guide-link");
+    guideLink.href = "guide.html?game=" + encodeURIComponent(game.slug);
+    guideLink.hidden = false;
+  }
+
   if (game.embed.type === "external") {
     // Nothing to embed for a native app / storefront listing — this page
     // shouldn't normally be reached for one (the homepage links out
