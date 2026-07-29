@@ -124,6 +124,27 @@ const SITE = {
         "don't worry about finding those — instead tell us how the on-ramp " +
         "itself lands: is it clear what to do, does the tone work for you, " +
         "would you want to keep playing? Drop your thoughts on Discord."
+    },
+    {
+      // Canonical build lives at github.com/picklecastlestudios/troubles-chase,
+      // deployed on its own GitHub Pages. Embedded live via iframe, not
+      // duplicated into this repo — updates to that repo show up here
+      // automatically, no re-sync needed.
+      slug: "troubles-chase",
+      title: "Troubles Chase",
+      tagline: "Your dog stole something she really shouldn't have. Run the " +
+               "neighborhood, dodge sprinklers and crate stacks, and get it " +
+               "home before Dad catches up.",
+      tags: ["Endless runner", "Singleplayer"],
+      cover: "assets/games/troubles-chase.jpg",
+      embed: { type: "iframe", url: "https://picklecastlestudios.github.io/troubles-chase/" },
+      feedbackPrompt: "Troubles is unlocked from the start; the other five " +
+        "pets (and the cat) unlock as you rack up distance, so don't worry " +
+        "about reaching them in one sitting. Try a few runs and tell us: " +
+        "does the difficulty feel fair as the chase speeds up, are the " +
+        "obstacles (sprinklers, crate stacks) readable enough to react to, " +
+        "and is it clear what's happening when you get caught? Drop your " +
+        "thoughts on Discord."
     }
   ],
 
