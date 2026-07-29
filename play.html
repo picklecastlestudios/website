@@ -43,6 +43,7 @@
   <div class="wrap play-bar">
     <a class="pc-btn pc-btn--ghost pc-btn--sm" href="index.html#games">← All games</a>
     <h1 id="play-title">Loading…</h1>
+    <button type="button" class="pc-btn pc-btn--ghost pc-btn--sm" id="fs-toggle" aria-pressed="false" hidden>⛶ Fullscreen</button>
     <a class="pc-btn pc-btn--primary pc-btn--sm" href="#" data-link="kofi">Support us</a>
   </div>
   <div class="play-frame-wrap" id="play-mount"></div>
@@ -107,6 +108,36 @@
       frame.src = game.embed.path;
     }
     mount.appendChild(frame);
+
+    // Fullscreen toggle — mobile screens are small, so a small iframe plus
+    // browser chrome leaves barely enough room to play. Native Fullscreen
+    // API when available (desktop, Android Chrome); CSS-only "fill the
+    // viewport" fallback everywhere else (iOS Safari doesn't allow
+    // requestFullscreen on arbitrary elements, only <video>).
+    var fsBtn = document.getElementById("fs-toggle");
+    fsBtn.hidden = false;
+    function setFsState(on) {
+      mount.classList.toggle("is-fullscreen", on);
+      document.body.classList.toggle("is-fs-locked", on);
+      fsBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      fsBtn.textContent = on ? "✕ Exit fullscreen" : "⛶ Fullscreen";
+    }
+    fsBtn.addEventListener("click", function () {
+      var goingFullscreen = !mount.classList.contains("is-fullscreen");
+      setFsState(goingFullscreen);
+      var req = mount.requestFullscreen || mount.webkitRequestFullscreen;
+      var exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (goingFullscreen && req) {
+        req.call(mount).catch(function () {});
+      } else if (!goingFullscreen && exit && (document.fullscreenElement || document.webkitFullscreenElement)) {
+        exit.call(document);
+      }
+    });
+    ["fullscreenchange", "webkitfullscreenchange"].forEach(function (evt) {
+      document.addEventListener(evt, function () {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) setFsState(false);
+      });
+    });
   }
 
   // Ko-Fi callout under the game — always shown for a playable game, with
